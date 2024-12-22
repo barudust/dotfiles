@@ -1,0 +1,66 @@
+#!/bin/sh
+
+bat=/sys/class/power_supply/BAT1/
+per="$(cat "$bat/capacity")"
+
+icon() {
+    if [ "$(cat "$bat/status")" = "Charging" ]; then
+        # Verifica el nivel de batería mientras carga
+        if [ "$per" -gt "90" ]; then
+            icon="󰂅"  # Casi lleno
+        elif [ "$per" -gt "80" ]; then
+            icon="󰂋"  # 80%+
+        elif [ "$per" -gt "70" ]; then
+            icon="󰂊"  # 70%+
+        elif [ "$per" -gt "60" ]; then
+            icon="󰂉"  # 60%+
+        elif [ "$per" -gt "40" ]; then
+            icon="󰂈"  # 40%+
+        elif [ "$per" -gt "30" ]; then
+            icon="󰂇"  # 30%+
+        elif [ "$per" -gt "10" ]; then
+            icon="󰂆"  # 10%+
+        elif [ "$per" -gt "0" ]; then
+            icon="󰂄"  # Bajo
+        else
+            icon=""  # Batería vacía
+        fi
+    else
+        # Verifica el nivel de batería cuando no está cargando
+        if [ "$per" -gt "90" ]; then
+            icon="󰂂"
+        elif [ "$per" -gt "80" ]; then
+            icon="󰂁"
+        elif [ "$per" -gt "70" ]; then
+            icon="󰂀"
+        elif [ "$per" -gt "60" ]; then
+            icon="󰁿"
+        elif [ "$per" -gt "50" ]; then
+            icon="󰁾"
+        elif [ "$per" -gt "40" ]; then
+            icon="󰁽"
+        elif [ "$per" -gt "30" ]; then
+            icon="󰁼"
+        elif [ "$per" -gt "20" ]; then
+            icon="󰁻"
+        elif [ "$per" -gt "10" ]; then
+            icon="󰁺"
+            notify-send -u critical "Battery Low" "Connect Charger"
+        elif [ "$per" -gt "0" ]; then
+            icon=""
+            notify-send -u critical "Battery Low" "Connect Charger"
+        else
+            icon=""
+        fi
+    fi
+    echo "$icon"
+}
+
+percent() {
+    echo $per
+}
+
+# Comandos para mostrar icono o porcentaje
+[ "$1" = "icon" ] && icon && exit
+[ "$1" = "percent" ] && percent && exit
+exit

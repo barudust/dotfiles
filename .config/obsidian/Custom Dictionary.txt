@@ -1,0 +1,2 @@
+Comandos
+checksum_v1 = 9b3e1ac0641dc6889b2c4888477c427b

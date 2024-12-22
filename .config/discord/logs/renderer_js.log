@@ -1,0 +1,18 @@
+[2024-12-09 17:11:13.059] [info]  DiscordSplash.signalReady
+[2024-12-09 17:11:13.067] [info]  Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: file:///opt/discord/resources/app.asar/app_bootstrap/splash/bf3d19297ef12291559b3edae977480c.woff2
+[2024-12-09 17:11:13.124] [info]  DiscordSplash.onStateUpdate: {"status":"installing-updates","current":1,"total":6}
+[2024-12-09 17:11:13.125] [info]  Splash.onStateUpdate: {"status":"installing-updates","current":1,"total":6}
+[2024-12-09 17:11:13.127] [info]  DiscordSplash.onStateUpdate: {"status":"installing-updates","current":2,"total":6}
+[2024-12-09 17:11:13.127] [info]  Splash.onStateUpdate: {"status":"installing-updates","current":2,"total":6}
+[2024-12-09 17:11:13.127] [info]  DiscordSplash.onStateUpdate: {"status":"installing-updates","current":3,"total":6}
+[2024-12-09 17:11:13.128] [info]  Splash.onStateUpdate: {"status":"installing-updates","current":3,"total":6}
+[2024-12-09 17:11:13.128] [info]  DiscordSplash.onStateUpdate: {"status":"installing-updates","current":4,"total":6}
+[2024-12-09 17:11:13.128] [info]  Splash.onStateUpdate: {"status":"installing-updates","current":4,"total":6}
+[2024-12-09 17:11:13.128] [info]  DiscordSplash.onStateUpdate: {"status":"installing-updates","current":5,"total":6}
+[2024-12-09 17:11:13.128] [info]  Splash.onStateUpdate: {"status":"installing-updates","current":5,"total":6}
+[2024-12-09 17:11:13.129] [info]  DiscordSplash.onStateUpdate: {"status":"installing-updates","current":6,"total":6}
+[2024-12-09 17:11:13.129] [info]  Splash.onStateUpdate: {"status":"installing-updates","current":6,"total":6}
+[2024-12-09 17:11:13.129] [info]  DiscordSplash.onStateUpdate: {"status":"checking-for-updates","current":6,"total":6}
+[2024-12-09 17:11:13.129] [info]  Splash.onStateUpdate: {"status":"checking-for-updates","current":6,"total":6}
+[2024-12-09 17:11:13.129] [info]  DiscordSplash.onStateUpdate: {"status":"update-failure","current":6,"total":6,"seconds":10}
+[2024-12-09 17:11:13.129] [info]  Splash.onStateUpdate: {"status":"update-failure","current":6,"total":6,"seconds":10}

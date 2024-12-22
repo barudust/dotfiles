@@ -1,0 +1,94 @@
+## Collect data
+cache_dir="$HOME/.cache/eww/weather"
+cache_weather_stat=${cache_dir}/weather-stat
+cache_weather_degree=${cache_dir}/weather-degree
+cache_weather_hex=${cache_dir}/weather-hex
+cache_weather_icon=${cache_dir}/weather-icon
+cache_weather_city=${cache_dir}/weather-city
+cache_weather_country=${cache_dir}/weather-country
+
+## Weather data
+LATITUDE="19.50"
+LONGITUDE="-99.14"
+UNIT="metric" # Open-Meteo uses metric by default
+
+## Make cache dir
+if [[ ! -d "$cache_dir" ]]; then
+    mkdir -p ${cache_dir}
+fi
+
+## Get data
+get_weather_data() {
+    weather=$(curl -sf "https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&current_weather=true")
+    echo ${weather}
+
+    if [ ! -z "$weather" ]; then
+        # Extraer datos del JSON
+        weather_temp=$(echo "$weather" | jq ".current_weather.temperature" | cut -d "." -f 1)
+        weather_icon_code=$(echo "$weather" | jq ".current_weather.weathercode")
+        weather_description="Clear Sky" # Open-Meteo no proporciona descripciones detalladas
+        weather_city="Ciudad de México" # Estático porque Open-Meteo no incluye ciudades
+        weather_country="MX"
+
+        # Asignar iconos y colores según weathercode
+        if [ "$weather_icon_code" == "0" ]; then
+            weather_icon="" # Clear sky
+            weather_hex="#E0AF68"
+        elif [ "$weather_icon_code" == "1" ] || [ "$weather_icon_code" == "2" ]; then
+            weather_icon="" # Partly cloudy
+            weather_hex="#A9B1D6"
+        elif [ "$weather_icon_code" == "3" ]; then
+            weather_icon="" # Overcast
+            weather_hex="#A9B1D6"
+        elif [ "$weather_icon_code" == "45" ] || [ "$weather_icon_code" == "48" ]; then
+            weather_icon="" # Fog
+            weather_hex="#7AA2F7"
+        elif [ "$weather_icon_code" == "51" ] || [ "$weather_icon_code" == "56" ]; then
+            weather_icon="" # Drizzle
+            weather_hex="#7AA2F7"
+        elif [ "$weather_icon_code" == "61" ] || [ "$weather_icon_code" == "66" ]; then
+            weather_icon="" # Rain
+            weather_hex="#7AA2F7"
+        elif [ "$weather_icon_code" == "71" ]; then
+            weather_icon="" # Snow
+            weather_hex="#C0CAF5"
+        elif [ "$weather_icon_code" == "95" ]; then
+            weather_icon="" # Thunderstorm
+            weather_hex="#E0AF68"
+        else
+            weather_icon="" # Default icon
+            weather_hex="#A9B1D6"
+        fi
+
+        # Guardar en caché
+        echo "$weather_icon" >  ${cache_weather_icon}
+        echo "$weather_city" >  ${cache_weather_city}
+        echo "$weather_country" >  ${cache_weather_country}
+        echo "$weather_description" > ${cache_weather_stat}
+        echo "$weather_temp""°C" > ${cache_weather_degree}
+        echo "$weather_hex" > ${cache_weather_hex}
+    else
+        # Si no hay datos, usar valores por defecto
+        echo "Weather Unavailable" > ${cache_weather_stat}
+        echo "" > ${cache_weather_icon}
+        echo "-" > ${cache_weather_degree}
+        echo "#A9B1D6" > ${cache_weather_hex}
+    fi
+}
+
+## Execute
+if [[ "$1" == "--getdata" ]]; then
+    get_weather_data
+elif [[ "$1" == "--icon" ]]; then
+    cat ${cache_weather_icon}
+elif [[ "$1" == "--city" ]]; then
+    cat ${cache_weather_city}
+elif [[ "$1" == "--country" ]]; then
+    cat ${cache_weather_country}
+elif [[ "$1" == "--temp" ]]; then
+    cat ${cache_weather_degree}
+elif [[ "$1" == "--hex" ]]; then
+    cat ${cache_weather_hex}
+elif [[ "$1" == "--stat" ]]; then
+    cat ${cache_weather_stat}
+fi

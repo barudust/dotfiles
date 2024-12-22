@@ -1,0 +1,35 @@
+#!/bin/sh
+
+symbol() {
+    # Verificar si la interfaz Wi-Fi está conectada
+    connected=$(nmcli -t -f ACTIVE,SSID device wifi | grep "^yes" | cut -d: -f2)
+
+    if [ -z "$connected" ]; then
+       echo ""
+	 # Si no está conectado, salir sin mostrar nada
+        exit
+    fi
+
+    # Obtener la calidad de la señal en porcentaje
+    signal=$(nmcli -t -f IN-USE,SIGNAL device wifi | grep "^*" | cut -d: -f2)
+
+    # Asignar ícono según el rango de calidad
+    if [ "$signal" -ge 81 ]; then
+        echo "󰤨 "  # Excelente
+    elif [ "$signal" -ge 61 ]; then
+        echo "󰤥 "  # Buena
+    elif [ "$signal" -ge 41 ]; then
+        echo "󰤢 "  # Regular
+    elif [ "$signal" -ge 21 ]; then
+        echo "󰤟 "  # Débil
+    else
+        echo "󰤫 "  # Muy baja
+    fi
+}
+
+name() {
+    nmcli | grep "^wlan0" | sed 's/\ connected\ to\ /Connected to /g' | cut -d ':' -f2
+}
+
+[ "$1" = "icon" ] && symbol && exit
+[ "$1" = "name" ] && name && exit

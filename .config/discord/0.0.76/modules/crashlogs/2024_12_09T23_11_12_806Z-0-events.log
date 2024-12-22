@@ -1,0 +1,9 @@
+2024-12-09T23:11:12.811Z 0: 
+
+----------------------------------------------
+2024-12-09T23:11:12.817Z 1: Discord starting: {"releaseChannel":"stable","version":"0.0.76"}, modulepath: /home/baru/.config/discord/0.0.76/modules
+2024-12-09T23:11:12.819Z 2: ✅ webContents.created web1 ""
+2024-12-09T23:11:12.820Z 3: ✅ window.created win1 "discord"
+2024-12-09T23:11:13.174Z 4: ✅ webContents.did-finish-load web1
+2024-12-09T23:11:14.368Z 5: window.close win1
+2024-12-09T23:11:14.381Z 6: webContents.destroyed web1
